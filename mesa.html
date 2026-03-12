@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduVoice · university feedback</title>
+    <!-- Font Awesome 6 (free) for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f4fa 0%, #dae5f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .main-card {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px 48px 40px 40px;
+            box-shadow: 0 20px 40px rgba(0, 15, 40, 0.25), 0 8px 20px rgba(0, 20, 60, 0.2);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        /* header with HOD acknowledgement */
+        .hero {
+            background: #0b2a4f;
+            background-image: radial-gradient(circle at 30% 40%, #1b4a7a 0%, #072140 100%);
+            padding: 2.5rem 2.5rem 1.8rem 2.5rem;
+            color: white;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero h1 i {
+            color: #ffd966;
+            font-size: 2.2rem;
+        }
+
+        .hod-recognition {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            margin-top: 1.4rem;
+            padding: 1.2rem 1.8rem;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            border: 1px solid rgba(255,255,200,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .hod-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .hod-badge i {
+            font-size: 2rem;
+            color: #ffb570;
+        }
+
+        .hod-badge span {
+            background: #f5c542;
+            color: #0b2a4f;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-left: 6px;
+        }
+
+        .divider-hod {
+            width: 2px;
+            height: 30px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .hod-names {
+            display: flex;
+            gap: 1.8rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .hod-names p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hod-names i {
+            color: #ffdfa0;
+        }
+
+        /* main comment section */
+        .comment-section {
+            padding: 2.2rem 2.5rem 2.8rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0b2a4f;
+            margin-bottom: 1.8rem;
+        }
+
+        .section-title i {
+            color: #2a6f97;
+            background: #ffffffc0;
+            padding: 12px;
+            border-radius: 50%;
+            box-shadow: 0 6px 12px rgba(0,40,70,0.1);
+        }
+
+Knarf Divine, [12/03/2026 10:11 pm]
+/* interactive form */
+        .comment-form {
+            background: white;
+            border-radius: 40px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2.8rem;
+            box-shadow: 0 10px 20px rgba(0, 20, 40, 0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .comment-form:focus-within {
+            box-shadow: 0 15px 30px rgba(30, 100, 180, 0.2);
+        }
+
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .input-field {
+            flex: 1 1 200px;
+            display: flex;
+            align-items: center;
+            background: #f1f7fd;
+            border-radius: 60px;
+            padding: 0.2rem 1.4rem;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .input-field i {
+            color: #2a6f97;
+            font-size: 1.2rem;
+            width: 30px;
+        }
+
+        .input-field input, .input-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 1rem 0;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .input-field select {
+            cursor: pointer;
+        }
+
+        .input-field:focus-within {
+            border-color: #2a6f97;
+            background: white;
+        }
+
+        .message-area {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            background: #f1f7fd;
+            border-radius: 30px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid transparent;
+        }
+
+        .message-area i {
+            color: #2a6f97;
+            font-size: 1.3rem;
+            margin-top: 6px;
+        }
+
+        .message-area textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            resize: vertical;
+            font-size: 1rem;
+            padding: 6px 0;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .message-area:focus-within {
+            border-color: #2a6f97;
+            background: white;
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn-submit {
+            background: #0b2a4f;
+            color: white;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 1px solid #ffffff40;
+            box-shadow: 0 8px 14px rgba(11,42,79,0.3);
+        }
+
+        .btn-submit:hover {
+            background: #1f4a7a;
+            transform: scale(1.02);
+        }
+
+        .btn-submit i {
+            font-size: 1.2rem;
+        }
+
+        .feedback-hint {
+            color: #2a4d6e;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffffb0;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+        }
+
+        /* live comments stream */
+        .comments-container {
+            background: #ffffffd6;
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 1.8rem 2rem;
+            border: 1px solid white;
+        }
+
+        .comments-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .comments-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #163A5F;
+        }
+
+        .comment-count {
+            background: #b6d6f0;
+            padding: 5px 12px;
+
+Knarf Divine, [12/03/2026 10:11 pm]
+border-radius: 40px;
+            font-weight: 600;
+            color: #072140;
+        }
+
+        .comments-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .comment-item {
+            background: #f8fcff;
+            border-radius: 28px;
+            padding: 1.2rem 1.6rem;
+            border-left: 6px solid #2a6f97;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            transition: 0.1s;
+            word-break: break-word;
+        }
+
+        .comment-item:hover {
+            background: white;
+            box-shadow: 0 8px 16px rgba(0, 50, 90, 0.1);
+        }
+
+        .comment-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .comment-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #0b2a4f;
+        }
+
+        .comment-badge {
+            background: #ddaa44;
+            color: #0b2a4f;
+            border-radius: 50px;
+            padding: 2px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .comment-year {
+            color: #3d5f8a;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .comment-text {
+            font-size: 1.05rem;
+            line-height: 1.4;
+            color: #1f2f40;
+            padding-right: 1rem;
+        }
+
+        .empty-feedback {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: #7a9ec2;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.2rem 2rem;
+            color: #1f4465;
+            border-top: 1px dashed #b3c9e0;
+            font-size: 0.9rem;
+            background: #ebf3fa;
+        }
+
+        footer i {
+            color: #c45b4a;
+        }
+    </style>
+</head>
+<body>
+<div class="main-card">
+    <!-- hero / header with Ahmed & Knarf acknowledgement -->
+    <div class="hero">
+        <h1>
+            <i class="fas fa-graduation-cap"></i> 
+            UniVoice · students speak
+        </h1>
+        <div class="hod-recognition">
+            <div class="hod-badge">
+                <i class="fas fa-user-tie"></i>
+                <span>HOD</span>
+            </div>
+            <div class="divider-hod"></div>
+            <div class="hod-names">
+                <p><i class="fas fa-star"></i> Ahmed</p>
+                <p><i class="fas fa-star"></i> Knarf</p>
+            </div>
+            <div style="margin-left: auto; display: flex; gap: 4px; opacity:0.8;">
+                <i class="fas fa-chevron-right"></i>
+                <i class="fas fa-comment-dots"></i>
+            </div>
+        </div>
+        <p style="margin-top: 1rem; opacity:0.9; font-weight:300;">
+            <i class="fas fa-microphone-alt" style="margin-right: 6px;"></i> 
+            your voice matters — HODs Ahmed & Knarf personally read every opinion.
+        </p>
+    </div>
+
+    <!-- comment section area -->
+    <div class="comment-section">
+        <div class="section-title">
+            <i class="fas fa-comments"></i> 
+            <span>express your opinion</span>
+        </div>
+
+        <!-- interactive form -->
+        <div class="comment-form" id="commentForm">
+            <div class="input-row">
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="studentName" placeholder="Full name" maxlength="50">
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-book-open"></i>
+                    <select id="studentYear">
+                        <option value="1st Year">1st Year</option>
+                        <option value="2nd Year">2nd Year</option>
+
+Knarf Divine, [12/03/2026 10:11 pm]
+<option value="3rd Year">3rd Year</option>
+                        <option value="4th Year">4th Year</option>
+                        <option value="Postgraduate">Postgraduate</option>
+                    </select>
+                </div>
+            </div>
+            <div class="message-area">
+                <i class="fas fa-pen"></i>
+                <textarea id="commentText" rows="2" placeholder="Write your opinion / suggestion / feedback..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button class="btn-submit" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Publish opinion
+                </button>
+                <span class="feedback-hint">
+                    <i class="fas fa-lightbulb"></i> Ahmed & Knarf appreciate respectful ideas
+                </span>
+            </div>
+        </div>
+
+        <!-- live comments feed -->
+        <div class="comments-container">
+            <div class="comments-header">
+                <h3><i class="fas fa-stream" style="margin-right: 8px;"></i>recent opinions</h3>
+                <span class="comment-count" id="commentCount">0</span>
+            </div>
+            <ul class="comments-list" id="commentsList">
+                <!-- comments will be injected dynamically -->
+                <li class="empty-feedback">No opinions yet. Be the first to share!</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- tiny footer with respect -->
+    <footer>
+        <i class="fas fa-heart" style="margin-right: 4px;"></i> 
+        acknowledged: <strong>Ahmed · Knarf</strong> (Heads of Department) 
+        <span style="margin:0 8px;">|</span> 
+        <i class="fas fa-university"></i> university feedback interactive
+    </footer>
+</div>
+
+<script>
+    (function() {
+        // ---------- data and references ----------
+        let comments = [];   // each comment: { name, year, text }
+
+        const nameInput = document.getElementById('studentName');
+        const yearSelect = document.getElementById('studentYear');
+        const commentText = document.getElementById('commentText');
+        const submitBtn = document.getElementById('submitBtn');
+        const commentsList = document.getElementById('commentsList');
+        const commentCountSpan = document.getElementById('commentCount');
+
+        // helper to render comments from array
+        function renderComments() {
+            // clear list
+            commentsList.innerHTML = '';
+
+            if (comments.length === 0) {
+                commentsList.innerHTML = '<li class="empty-feedback">✏️ No opinions yet. Share your thoughts!</li>';
+                commentCountSpan.innerText = '0';
+                return;
+            }
+
+            // sort: most recent first (since we push, reverse order)
+            const sorted = [...comments].reverse();
+
+            for (let c of sorted) {
+                const li = document.createElement('li');
+                li.className = 'comment-item';
+
+                // inner structure
+                li.innerHTML = `
+                    <div class="comment-head">
+                        <span class="comment-name">${escapeHtml(c.name) || 'Anonymous'}</span>
+                        <span class="comment-badge">${escapeHtml(c.year)}</span>
+                        <span class="comment-year"><i class="far fa-calendar-alt"></i> just now</span>
+                    </div>
+                    <div class="comment-text">💬 ${escapeHtml(c.text)}</div>
+                `;
+                commentsList.appendChild(li);
+            }
+
+            commentCountSpan.innerText = comments.length;
+        }
+
+        // simple escape for XSS safety
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // validate and add new comment
+        function addCommentFromForm() {
+
+Knarf Divine, [12/03/2026 10:11 pm]
+const name = nameInput.value.trim();
+            const year = yearSelect.value;
+            const text = commentText.value.trim();
+
+            if (!name) {
+                alert('Please enter your name.');
+                nameInput.focus();
+                return;
+            }
+            if (!text) {
+                alert('Opinion cannot be empty.');
+                commentText.focus();
+                return;
+            }
+            if (text.length < 3) {
+                alert('Opinion too short (minimum 3 characters).');
+                commentText.focus();
+                return;
+            }
+
+            // push into array
+            comments.push({
+                name: name,
+                year: year,
+                text: text
+            });
+
+            // clear form
+            nameInput.value = '';
+            commentText.value = '';
+            // (optional set default year? we leave as selected)
+
+            // re-render list
+            renderComments();
+
+            // tiny interactive feedback: slight animation / scroll to new comment
+            const firstComment = commentsList.querySelector('.comment-item');
+            if (firstComment) {
+                firstComment.style.transition = '0.2s background';
+                firstComment.style.background = '#fff9e0';
+                setTimeout(() => {
+                    if (firstComment) firstComment.style.background = '';
+                }, 400);
+            }
+        }
+
+        // event listener for submit button
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            addCommentFromForm();
+        });
+
+        // allow Enter in textarea? (but not required, keep it user-friendly)
+        commentText.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();  // prevents newline, triggers submit (optional)
+                // many users expect Enter to submit, but we want to keep it comfortable.
+                // we'll do it: if Enter without shift -> submit.
+                addCommentFromForm();
+            }
+        });
+
+        // initial demo comments (to make page lively, respecting Ahmed & Knarf)
+        // they are just examples – can be removed.
+        comments.push(
+            { name: 'Fatima', year: '3rd Year', text: 'Great initiative! Ahmed and Knarf are very supportive HODs.' },
+            { name: 'Rahul', year: 'Postgraduate', text: 'Would love more research labs. Thanks for listening, Dr. Ahmed & Dr. Knarf.' },
+            { name: 'Elena', year: '2nd Year', text: 'The new library hours help a lot. Big shoutout to HOD Knarf!' }
+        );
+        // render initial data
+        renderComments();
+    })();
+</script>
+</body>
+</html>
+
+
+<!DAll submitted comments appear in the "recent opinions" section. The list updates immediately when a new comment is added, and a counter shows the total number of opinions.
+-  
+```html
+<!DOCTYPE html>
+<htmThe blue header prominently features a "HOD" badge and the names Ahmed and Knarf, ensuring they are recognized as the Heads of Department as you requested.
